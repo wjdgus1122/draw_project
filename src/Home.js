@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DrawBox } from "./DrawBox";
 import { mainStyle } from "./GlobalStyle";
 
 const Wrap = styled.div`
@@ -13,7 +14,9 @@ const Wrap = styled.div`
 export const Home = () => {
   return (
     <>
-      <Wrap></Wrap>
+      <Wrap>
+        <DrawBox />
+      </Wrap>
     </>
   );
 };
