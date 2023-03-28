@@ -30,3 +30,30 @@ export const PaletteColor = [
     colorName: "black",
   },
 ];
+
+export const Tool = [
+  {
+    id: "0",
+    toolName: "brush",
+    toolIcon: "fa-solid fa-paintbrush",
+    importName: "faPaintbrush",
+  },
+  {
+    id: "1",
+    toolName: "paint",
+    toolIcon: "fa-solid fa-fill-drip",
+    importName: "faFillDrip",
+  },
+  {
+    id: "2",
+    toolName: "text",
+    toolIcon: "fa-solid fa-font",
+    importName: "faFont",
+  },
+  {
+    id: "3",
+    toolName: "eraser",
+    toolIcon: "fa-solid fa-eraser",
+    importName: "faEraser",
+  },
+];
