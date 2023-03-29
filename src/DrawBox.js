@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { PaletteColor, Tool } from "./ColorDb";
+import { PaletteColor } from "./ColorDb";
 import {
   faPaintbrush,
   faFillDrip,
   faFont,
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useRef, useState } from "react";
 
 const CanvasWrap = styled.div`
   width: 80%;
@@ -68,9 +69,55 @@ const ColorBtn = styled.div`
 `;
 
 export const DrawBox = () => {
+  const canvasRef = useRef(null);
+  const constextRef = useRef(null);
+  const [ctx, setCtx] = useState();
+  const [isDrawing, setIsDrawing] = useState(false);
+  const canvasWrap = document.querySelector(".canvasWrap");
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = window.innerHeight * 0.8;
+
+    const context = canvas.getContext("2d");
+    context.strokeStyle = "black";
+    context.lineWidth = 2.5;
+    constextRef.current = context;
+
+    setCtx(context);
+  }, []);
+
+  const startDrawing = () => {
+    setIsDrawing(true);
+  };
+
+  const finishDrawing = () => {
+    setIsDrawing(false);
+  };
+
+  const drawing = ({ nativeEvent }) => {
+    const { offsetX, offsetY } = nativeEvent;
+
+    if (ctx) {
+      if (!isDrawing) {
+        ctx.beginPath();
+        ctx.moveTo(offsetX, offsetY);
+      } else {
+        ctx.lineTo(offsetX, offsetY);
+        ctx.stroke();
+      }
+    }
+  };
   return (
-    <CanvasWrap>
-      <Canvas></Canvas>
+    <CanvasWrap className="">
+      <canvas
+        className="drawCanvas"
+        ref={canvasRef}
+        onMouseDown={startDrawing}
+        onMouseUp={finishDrawing}
+        onMouseMove={drawing}
+        onMouseLeave={finishDrawing}
+      ></canvas>
       <Palette>
         <ToolBox>
           <ToolBtn>
