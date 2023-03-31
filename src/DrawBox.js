@@ -70,10 +70,11 @@ const ColorBtn = styled.div`
 
 export const DrawBox = () => {
   const canvasRef = useRef(null);
-  const constextRef = useRef(null);
+  const contextRef = useRef(null);
   const [ctx, setCtx] = useState();
   const [isDrawing, setIsDrawing] = useState(false);
   const canvasWrap = document.querySelector(".canvasWrap");
+  let isPen = true;
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.width = window.innerWidth * 0.8;
@@ -82,13 +83,17 @@ export const DrawBox = () => {
     const context = canvas.getContext("2d");
     context.strokeStyle = "black";
     context.lineWidth = 2.5;
-    constextRef.current = context;
+    contextRef.current = context;
 
     setCtx(context);
   }, []);
 
+  console.log(ctx);
   const startDrawing = () => {
-    setIsDrawing(true);
+    if (isPen) {
+      setIsDrawing(true);
+    } else {
+    }
   };
 
   const finishDrawing = () => {
@@ -99,14 +104,23 @@ export const DrawBox = () => {
     const { offsetX, offsetY } = nativeEvent;
 
     if (ctx) {
-      if (!isDrawing) {
-        ctx.beginPath();
-        ctx.moveTo(offsetX, offsetY);
+      if (isPen) {
+        if (!isDrawing) {
+          ctx.beginPath();
+          ctx.moveTo(offsetX, offsetY);
+        } else {
+          ctx.lineTo(offsetX, offsetY);
+          ctx.stroke();
+        }
       } else {
-        ctx.lineTo(offsetX, offsetY);
-        ctx.stroke();
+        ctx.clearRect(offsetX - 0.01, offsetY - 0.01, offsetX, offsetY);
       }
     }
+  };
+  const clearCanvas = ({ nativeEvent }) => {
+    const { offsetX, offsetY } = nativeEvent;
+
+    // canvas.getContext('2d')!!.clearRect(0, 0, canvas.width, canvas.height);
   };
   return (
     <CanvasWrap className="">
@@ -120,16 +134,18 @@ export const DrawBox = () => {
       ></canvas>
       <Palette>
         <ToolBox>
-          <ToolBtn>
+          <ToolBtn
+            onClick={() => {
+              isPen = true;
+            }}
+          >
             <FontAwesomeIcon icon={faPaintbrush} />
           </ToolBtn>
-          <ToolBtn>
-            <FontAwesomeIcon icon={faFillDrip} />
-          </ToolBtn>
-          <ToolBtn>
-            <FontAwesomeIcon icon={faFont} />
-          </ToolBtn>
-          <ToolBtn>
+          <ToolBtn
+            onClick={() => {
+              isPen = false;
+            }}
+          >
             <FontAwesomeIcon icon={faEraser} />
           </ToolBtn>
         </ToolBox>
