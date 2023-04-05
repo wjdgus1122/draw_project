@@ -73,22 +73,22 @@ export const DrawBox = () => {
   const contextRef = useRef(null);
   const [ctx, setCtx] = useState();
   const [isDrawing, setIsDrawing] = useState(false);
-  const canvasWrap = document.querySelector(".canvasWrap");
+  const [drawColor, setDrawColor] = useState("black");
   let isPen = true;
+  let drawData = [];
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.width = window.innerWidth * 0.8;
     canvas.height = window.innerHeight * 0.8;
 
     const context = canvas.getContext("2d");
-    context.strokeStyle = "black";
+    context.strokeStyle = drawColor;
     context.lineWidth = 2.5;
     contextRef.current = context;
 
     setCtx(context);
-  }, []);
+  }, [drawColor]);
 
-  console.log(ctx);
   const startDrawing = () => {
     if (isPen) {
       setIsDrawing(true);
@@ -113,14 +113,9 @@ export const DrawBox = () => {
           ctx.stroke();
         }
       } else {
-        ctx.clearRect(offsetX - 0.01, offsetY - 0.01, offsetX, offsetY);
+        ctx.clearRect(offsetX, offsetY, 10, 10);
       }
     }
-  };
-  const clearCanvas = ({ nativeEvent }) => {
-    const { offsetX, offsetY } = nativeEvent;
-
-    // canvas.getContext('2d')!!.clearRect(0, 0, canvas.width, canvas.height);
   };
   return (
     <CanvasWrap className="">
@@ -150,7 +145,12 @@ export const DrawBox = () => {
           </ToolBtn>
         </ToolBox>
         {PaletteColor.map((color) => (
-          <ColorBtn colorid={color.colorId} />
+          <ColorBtn
+            colorid={color.colorId}
+            onClick={() => {
+              setDrawColor(`${color.colorId}`);
+            }}
+          />
         ))}
       </Palette>
     </CanvasWrap>
