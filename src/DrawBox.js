@@ -7,7 +7,7 @@ import {
   faFont,
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const CanvasWrap = styled.div`
   width: 80%;
@@ -68,7 +68,7 @@ const ColorBtn = styled.div`
   margin: 0.5rem;
 `;
 
-export const DrawBox = () => {
+export const DrawBox = React.memo(function Canvas({ color }) {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [ctx, setCtx] = useState();
@@ -155,4 +155,4 @@ export const DrawBox = () => {
       </Palette>
     </CanvasWrap>
   );
-};
+});
