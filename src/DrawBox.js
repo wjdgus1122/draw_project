@@ -68,7 +68,7 @@ const ColorBtn = styled.div`
   margin: 0.5rem;
 `;
 
-export const DrawBox = React.memo(function Canvas({ color }) {
+export const DrawBox = () => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [ctx, setCtx] = useState();
@@ -155,4 +155,6 @@ export const DrawBox = React.memo(function Canvas({ color }) {
       </Palette>
     </CanvasWrap>
   );
-});
+};
+
+export const MemoDrawBox = React.memo(DrawBox);
