@@ -78,8 +78,8 @@ export const DrawBox = () => {
   let drawData = [];
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = window.innerWidth * 0.8;
-    canvas.height = window.innerHeight * 0.8;
+    // canvas.width = window.innerWidth * 0.8;
+    // canvas.height = window.innerHeight * 0.8;
 
     const context = canvas.getContext("2d");
     context.strokeStyle = drawColor;
@@ -117,6 +117,7 @@ export const DrawBox = () => {
       }
     }
   };
+
   return (
     <CanvasWrap className="">
       <canvas
@@ -126,6 +127,8 @@ export const DrawBox = () => {
         onMouseUp={finishDrawing}
         onMouseMove={drawing}
         onMouseLeave={finishDrawing}
+        width={1200}
+        height={800}
       ></canvas>
       <Palette>
         <ToolBox>
