@@ -15,6 +15,7 @@ const CanvasWrap = styled.div`
   background-color: #fff;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   position: relative;
+  overflow: hidden;
 `;
 
 const Canvas = styled.canvas`
@@ -76,16 +77,23 @@ export const DrawBox = () => {
   const [drawColor, setDrawColor] = useState("black");
   let isPen = true;
   let drawData = [];
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    // canvas.width = window.innerWidth * 0.8;
-    // canvas.height = window.innerHeight * 0.8;
-
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = window.innerHeight * 0.8;
     const context = canvas.getContext("2d");
     context.strokeStyle = drawColor;
     context.lineWidth = 2.5;
     contextRef.current = context;
-
+    setCtx(context);
+  }, []);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.strokeStyle = drawColor;
+    context.lineWidth = 2.5;
+    contextRef.current = context;
     setCtx(context);
   }, [drawColor]);
 
@@ -119,7 +127,7 @@ export const DrawBox = () => {
   };
 
   return (
-    <CanvasWrap className="">
+    <CanvasWrap>
       <canvas
         className="drawCanvas"
         ref={canvasRef}
@@ -127,8 +135,8 @@ export const DrawBox = () => {
         onMouseUp={finishDrawing}
         onMouseMove={drawing}
         onMouseLeave={finishDrawing}
-        width={1200}
-        height={800}
+        // width={1200}
+        // height={800}
       ></canvas>
       <Palette>
         <ToolBox>
