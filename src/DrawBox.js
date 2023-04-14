@@ -102,10 +102,12 @@ export const DrawBox = () => {
       setIsDrawing(true);
     } else {
     }
+    console.log("start");
   };
 
   const finishDrawing = () => {
     setIsDrawing(false);
+    console.log("finish");
   };
 
   const drawing = ({ nativeEvent }) => {
@@ -124,6 +126,7 @@ export const DrawBox = () => {
         ctx.clearRect(offsetX, offsetY, 10, 10);
       }
     }
+    console.log("draw");
   };
 
   return (
@@ -135,8 +138,9 @@ export const DrawBox = () => {
         onMouseUp={finishDrawing}
         onMouseMove={drawing}
         onMouseLeave={finishDrawing}
-        // width={1200}
-        // height={800}
+        onTouchStart={startDrawing}
+        onTouchMove={drawing}
+        onTouchEnd={finishDrawing}
       ></canvas>
       <Palette>
         <ToolBox>
