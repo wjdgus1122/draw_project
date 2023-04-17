@@ -35,6 +35,10 @@ const Palette = styled.div`
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 3.5rem;
+  }
 `;
 
 const ToolBox = styled.div`
@@ -46,7 +50,7 @@ const ToolBox = styled.div`
 const ToolBtn = styled.div`
   width: 3rem;
   height: 80%;
-  font-size: 1.5rem;
+  font-size: 1rem;
   box-sizing: border-box;
   color: #1d1d1d;
   transition: 0.5s;
@@ -55,8 +59,12 @@ const ToolBtn = styled.div`
   align-items: center;
   cursor: pointer;
   :hover {
-    background-color: #e1e1e1;
     font-size: 2rem;
+  }
+  @media screen and (max-width: 768px) {
+    :hover {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -67,6 +75,15 @@ const ColorBtn = styled.div`
   border: 1px solid #f1f1f1;
   background-color: ${(props) => props.colorid};
   margin: 0.5rem;
+  @media screen and (max-width: 768px) {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  @media screen and (max-width: 300px) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 `;
 
 export const DrawBox = () => {
@@ -148,6 +165,7 @@ export const DrawBox = () => {
             onClick={() => {
               isPen = true;
             }}
+            onTouchStart={() => (isPen = true)}
           >
             <FontAwesomeIcon icon={faPaintbrush} />
           </ToolBtn>
@@ -155,6 +173,7 @@ export const DrawBox = () => {
             onClick={() => {
               isPen = false;
             }}
+            onTouchStart={() => (isPen = false)}
           >
             <FontAwesomeIcon icon={faEraser} />
           </ToolBtn>
